@@ -21,7 +21,7 @@ expo start
 <p align="center">
   <img src="https://github.com/dianebodin/airbnb-frontend/blob/master/preview/1.png" width="250">
   <img src="https://github.com/dianebodin/airbnb-frontend/blob/master/preview/2.png" width="250">
-  <img src="https://github.com/dianebodin/airbnb-frontend/blob/master/view/3.png" width="250">
+  <img src="https://github.com/dianebodin/airbnb-frontend/blob/master/preview/3.png" width="250">
 </p>
 <p align="center">
   <img src="https://github.com/dianebodin/airbnb-frontend/blob/master/preview/4.png" width="250">
