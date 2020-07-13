@@ -85,7 +85,7 @@ const App = () => {
               <Tab.Screen name="Around Me" options={{ tabBarLabel: "Around Me", tabBarIcon: ({ color, size }) => (<SimpleLineIcons name="location-pin" size={size} color={color} />)}}>
                 {() => (
                   <Stack.Navigator>
-                    <Stack.Screen name="Around Me" options={{ title: "Around Me", tabBarLabel: "Around Me" }}>
+                    <Stack.Screen name="Around Me" options={{ title: "Around Me", headerStyle: { backgroundColor: "#F35960" }, headerTitleStyle: { color: "white" }, headerTitleAlign: "center" }}>
                     {() => <AroundMeScreen />}
                     </Stack.Screen>
                   </Stack.Navigator>
