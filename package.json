@@ -16,6 +16,7 @@
     "expo": "~37.0.3",
     "expo-image-picker": "^8.1.0",
     "expo-location": "~8.1.0",
+    "lodash": "^4.17.19",
     "logkitty": "^0.7.1",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
