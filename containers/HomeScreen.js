@@ -12,7 +12,6 @@ const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
 
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("https://airbnb-backend-db.herokuapp.com/rooms");
@@ -22,28 +21,23 @@ const HomeScreen = () => {
     fetchData();
   }, []);
 
-
   return (
     <View>
-      {isLoading ? 
-        (<ActivityIndic />)
-        : 
-        (
-          <FlatList data={data} keyExtractor={item => String(item._id)} renderItem={({ item, index }) => 
-            (
-              <>
+      {isLoading ? <ActivityIndic />
+        : (
+          <FlatList data={data} keyExtractor={item => String(item._id)} renderItem={({ item, index }) => (
+            <>
               <TouchableWithoutFeedback onPress={() => navigation.navigate("Room", { id: item._id })}>
                 <RoomCard data={item} val={1} />
               </TouchableWithoutFeedback>
               <View style={index !== data.length-1 ? styles.line : styles.no} />
-              </>
-            )
-          } />
+            </>
+          )} />
         )
       }
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   line: {

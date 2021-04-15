@@ -12,7 +12,6 @@ const SignInScreen = ({ setTokenId }) => {
 
   const navigation = useNavigation();
 
-
   const connexion = async () => { 
     try {
       if (!email || !password) Alert.alert("Champs à remplir");
@@ -30,12 +29,11 @@ const SignInScreen = ({ setTokenId }) => {
         else if (error.response.data.error === "Wrong password") Alert.alert("Mauvais mot de passe");
       }
     }
-  }
+  };
 
   return (
     <KeyboardAwareScrollView extraScrollHeight={110} contentContainerStyle={styles.container}>
       <SafeAreaView style={styles.subcontainer}>
-
         <AntDesign name="home" size={150} color="white" />
 
         <View style={styles.center}>
@@ -50,11 +48,10 @@ const SignInScreen = ({ setTokenId }) => {
             <Text style={styles.noAccount}>Pas de compte ? S'inscrire</Text>
           </TouchableOpacity>
         </View>
-
       </SafeAreaView>
     </KeyboardAwareScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

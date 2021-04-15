@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, View, StyleSheet, Image, ScrollView, Alert } from "react-native";
+import { Text, TextInput, View, StyleSheet, Image, ScrollView, Alert, Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -19,7 +19,6 @@ const ProfileScreen = ({ user, setUser }) => {
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,7 +26,6 @@ const ProfileScreen = ({ user, setUser }) => {
         {
           headers: { Authorization: "Bearer " + user.token }
         });
-        //console.log(response.data);
 
         setData(response.data);
         if (response.data.account.picture) setPhoto(response.data.account.picture.secure_url);
@@ -39,7 +37,6 @@ const ProfileScreen = ({ user, setUser }) => {
     fetchData();
   }, [photo]);
   
-
   const imgProfileSaved = async () => {
     const cameraRollPerm = await ImagePicker.requestCameraRollPermissionsAsync(); //permissions
     if (cameraRollPerm.status === "granted") {
@@ -64,8 +61,7 @@ const ProfileScreen = ({ user, setUser }) => {
           Alert.alert("Erreur pour la photo de profil")
         } finally {}
     }
-  }
-
+  };
 
   const infosUpdate = async () => {
     try {
@@ -98,38 +94,39 @@ const ProfileScreen = ({ user, setUser }) => {
     }
   };
 
-
   return (
     <ScrollView style={styles.scroll}>
 
-      {isLoading ? 
-        (<ActivityIndic />)
-      : (
-        <KeyboardAwareScrollView extraScrollHeight={110} contentContainerStyle={styles.container}>
-          <TouchableOpacity onPress={imgProfileSaved} style={styles.imgContainer}>
-          {photo.length > 0 ? (<Image style={styles.img} source={{ uri: photo || data.picture[0].url }} />) 
-          : (<View style={styles.img}>
-            <AntDesign name="plus" size={35} color="#E1E1E1" style={styles.add} />
-          </View>)}
-          </TouchableOpacity>
+      {isLoading ? <ActivityIndic />
+        : (
+          <KeyboardAwareScrollView extraScrollHeight={110} contentContainerStyle={styles.container}>
+            <TouchableOpacity onPress={imgProfileSaved} style={styles.imgContainer}>
+            {photo.length > 0 ? <Image style={styles.img} source={{ uri: photo || data.picture[0].url }} />
+              : (
+                <View style={styles.img}>
+                  <AntDesign name="plus" size={35} color="#E1E1E1" style={styles.add} />
+                </View>
+              )
+            }
+            </TouchableOpacity>
 
-          <TextInput defaultValue={name} onChangeText={text => setName(text)} placeholder={data.account.name} placeholderTextColor="#BBBBBB" autoCapitalize="none" style={styles.input} />
-          <TextInput defaultValue={email} onChangeText={text => setEmail(text)} placeholder={data.email} placeholderTextColor="#BBBBBB" autoCapitalize="none" style={styles.input} />
-          <TextInput defaultValue={username} onChangeText={text => setUsername(text)} placeholder={data.account.username} placeholderTextColor="#BBBBBB" autoCapitalize="none" style={styles.input} />
-          <TextInput multiline={true} defaultValue={description} onChangeText={text => setDescription(text)} placeholder={data.account.description} placeholderTextColor="#BBBBBB" autoCapitalize="none" style={styles.textarea} />
+            <TextInput defaultValue={name} onChangeText={text => setName(text)} placeholder={data.account.name} placeholderTextColor="#BBBBBB" autoCapitalize="none" style={styles.input} />
+            <TextInput defaultValue={email} onChangeText={text => setEmail(text)} placeholder={data.email} placeholderTextColor="#BBBBBB" autoCapitalize="none" style={styles.input} />
+            <TextInput defaultValue={username} onChangeText={text => setUsername(text)} placeholder={data.account.username} placeholderTextColor="#BBBBBB" autoCapitalize="none" style={styles.input} />
+            <TextInput multiline={true} defaultValue={description} onChangeText={text => setDescription(text)} placeholder={data.account.description} placeholderTextColor="#BBBBBB" autoCapitalize="none" style={styles.textarea} />
 
-          <TouchableOpacity onPress={infosUpdate} style={styles.updateButton}>
-            <Text style={styles.updateButtonText}>Mettre à jour</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => { setUser(null) }} style={styles.logoutButton}>
-            <Text style={styles.logoutButtonText}>Se déconnecter</Text>
-          </TouchableOpacity>
-        </KeyboardAwareScrollView>
-      )}
+            <TouchableOpacity onPress={infosUpdate} style={styles.updateButton}>
+              <Text style={styles.updateButtonText}>Mettre à jour</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => { setUser(null) }} style={styles.logoutButton}>
+              <Text style={styles.logoutButtonText}>Se déconnecter</Text>
+            </TouchableOpacity>
+          </KeyboardAwareScrollView>
+        )
+      }
     </ScrollView>
   );
-}
-
+};
 
 const styles = StyleSheet.create({
   scroll: {

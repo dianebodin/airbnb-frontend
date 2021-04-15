@@ -13,7 +13,6 @@ const AroundMeSreen = () => {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
 
-
   useEffect(() => {
     const askPermission = async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -30,13 +29,11 @@ const AroundMeSreen = () => {
     askPermission();
   }, []);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`https://airbnb-backend-db.herokuapp.com/rooms/around?latitude=${latitude}&longitude=${longitude}`);
         setData(response.data);
-        //console.log(response.data);
       } catch (error) {
         console.log(error.message);
       }
@@ -44,35 +41,33 @@ const AroundMeSreen = () => {
     if (latitude && longitude) fetchData();
   }, [latitude, longitude]);
 
-
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-    {isLoading === false ? (
+    {isLoading === false ? 
+      (
+        <MapView showsUserLocation={true} style={{ width: "100%", flex: 1 }}
+          initialRegion={{
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: 0.18,
+            longitudeDelta: 0.18
+          }}
+        >
+          {data.map((marker) => {
+            return (
+              <MapView.Marker key={marker._id} coordinate={{ latitude: marker.location[1], longitude: marker.location[0] }}>
+                <MapView.Callout onPress={() => navigation.navigate("Room", { id: marker._id })}>
+                  <Text>{marker.title}</Text>
+                </MapView.Callout>
+              </MapView.Marker>
+            );
+          })}
+        </MapView>
 
-      <MapView showsUserLocation={true} style={{ width: "100%", flex: 1 }}
-        initialRegion={{
-          latitude: latitude,
-          longitude: longitude,
-          latitudeDelta: 0.18,
-          longitudeDelta: 0.18
-        }}
-      >
-        {data.map((marker) => {
-          return (
-            <MapView.Marker key={marker._id} coordinate={{ latitude: marker.location[1], longitude: marker.location[0] }}>
-              <MapView.Callout onPress={() => navigation.navigate("Room", { id: marker._id })}>
-                <Text>{marker.title}</Text>
-              </MapView.Callout>
-            </MapView.Marker>
-          );
-        })}
-      </MapView>
-
-    ) : null}
+      ) : null
+    }
     </View>
   );
-}
+};
 
 export default AroundMeSreen;
-
-//MapView.Callout: lien map

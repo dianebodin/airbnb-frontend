@@ -12,8 +12,7 @@ const RoomCard = ({ data, val }) => {
       else tab.push(<Ionicons key={i} name="ios-star" size={25} color="#BBBBBB" style={{ marginRight: 3 }} />);
     }
     return tab;
-  } 
-
+  };
 
   return (
     <View style={styles.container}>
@@ -26,7 +25,6 @@ const RoomCard = ({ data, val }) => {
       </View>
 
       <View style={styles.infosContainer}>
-
         <View>
           <Text numberOfLines={1} style={val ? styles.title : styles.hidden }>{data.title}</Text>
           <View style={styles.starsAndReviews}>
@@ -37,11 +35,10 @@ const RoomCard = ({ data, val }) => {
           </View>
         </View>
         <Image source={ data.user.account.picture ? {uri: data.user.account.picture.secure_url} : null} style={styles.imgProfile} />
-        
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -12,7 +12,6 @@ import AroundMeScreen from "./containers/AroundMeScreen";
 import RoomScreen from "./containers/RoomScreen";
 import ActivityIndic from './components/ActivityIndic';
 
-
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -20,7 +19,6 @@ const App = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({}); //objet qui contient 2 clés: token et id
-
 
   const setTokenId = async (token, id) => {
     if (token && id) {
@@ -32,7 +30,6 @@ const App = () => {
     setUser({ token: token, id: id });
   };
 
-
   useEffect(() => {
     const bootstrapAsync = async () => {
       const userToken = await AsyncStorage.getItem("userToken");
@@ -43,75 +40,68 @@ const App = () => {
     bootstrapAsync();
   }, []);
 
-
   return (
     <NavigationContainer>
-    {isLoading ? 
-    
-    (<ActivityIndic />)
-    
-    : user === null ? ( 
-      <Stack.Navigator>
-        <Stack.Screen name="SignIn" options={{ header: () => null, animationEnabled: false }}>
-          {() => <SignInScreen setTokenId={setTokenId} />}
-        </Stack.Screen>
+      {isLoading ? <ActivityIndic />
+        : user === null ? 
+          ( 
+            <Stack.Navigator>
+              <Stack.Screen name="SignIn" options={{ header: () => null, animationEnabled: false }}>
+                {() => <SignInScreen setTokenId={setTokenId} />}
+              </Stack.Screen>
 
-        <Stack.Screen name="SignUp" options={{ header: () => null, animationEnabled: false }}>
-          {() => <SignUpScreen setTokenId={setTokenId} />}
-        </Stack.Screen>
-      </Stack.Navigator>
-    ) : (
-
-      <Stack.Navigator>
-        <Stack.Screen name="Tab" options={{ header: () => null, animationEnabled: false }}>
-
-          {() => (
-            <Tab.Navigator tabBarOptions={{ activeTintColor: "black", inactiveTintColor: "white", style: { backgroundColor: "#F1485C" } }}>
-
-              <Tab.Screen name="Home" options={{ tabBarLabel: "Home", tabBarIcon: ({ color, size }) => (<AntDesign name="home" size={size} color={color} />)}}>
+              <Stack.Screen name="SignUp" options={{ header: () => null, animationEnabled: false }}>
+                {() => <SignUpScreen setTokenId={setTokenId} />}
+              </Stack.Screen>
+            </Stack.Navigator>
+          ) : (
+            <Stack.Navigator>
+              <Stack.Screen name="Tab" options={{ header: () => null, animationEnabled: false }}>
                 {() => (
-                  <Stack.Navigator>
-                    <Stack.Screen name="Home" options={{ title: "MonAirbnb", headerStyle: { backgroundColor: "#F35960" }, headerTitleStyle: { color: "white" }, headerTitleAlign: "center" }}>
-                      {() => <HomeScreen />}
-                    </Stack.Screen>
+                  <Tab.Navigator tabBarOptions={{ activeTintColor: "black", inactiveTintColor: "white", style: { backgroundColor: "#F1485C" } }}>
 
-                    <Stack.Screen name="Room" options={{ title: "Room", headerStyle: { backgroundColor: "#F35960" }, headerTitleStyle: { color: "white" }, headerTitleAlign: "center", headerBackTitleVisible: false, headerTintColor: "white" }}>
-                      {() => <RoomScreen />}
-                    </Stack.Screen>
-                  </Stack.Navigator>
+                    <Tab.Screen name="Home" options={{ tabBarLabel: "Home", tabBarIcon: ({ color, size }) => (<AntDesign name="home" size={size} color={color} />)}}>
+                      {() => (
+                        <Stack.Navigator>
+                          <Stack.Screen name="Home" options={{ title: "MonAirbnb", headerStyle: { backgroundColor: "#F35960" }, headerTitleStyle: { color: "white" }, headerTitleAlign: "center" }}>
+                            {() => <HomeScreen />}
+                          </Stack.Screen>
+
+                          <Stack.Screen name="Room" options={{ title: "Room", headerStyle: { backgroundColor: "#F35960" }, headerTitleStyle: { color: "white" }, headerTitleAlign: "center", headerBackTitleVisible: false, headerTintColor: "white" }}>
+                            {() => <RoomScreen />}
+                          </Stack.Screen>
+                        </Stack.Navigator>
+                      )}
+                    </Tab.Screen>
+
+                    <Tab.Screen name="Around Me" options={{ tabBarLabel: "Around Me", tabBarIcon: ({ color, size }) => (<SimpleLineIcons name="location-pin" size={size} color={color} />)}}>
+                      {() => (
+                        <Stack.Navigator>
+                          <Stack.Screen name="Around Me" options={{ title: "Around Me", headerStyle: { backgroundColor: "#F35960" }, headerTitleStyle: { color: "white" }, headerTitleAlign: "center" }}>
+                          {() => <AroundMeScreen />}
+                          </Stack.Screen>
+                        </Stack.Navigator>
+                      )}
+                    </Tab.Screen>
+
+                    <Tab.Screen name="Profile" options={{ tabBarLabel: "Profile", tabBarIcon: ({ color, size }) => (<AntDesign name="user" size={size} color={color} />)}}>
+                      {() => (
+                        <Stack.Navigator>
+                          <Stack.Screen name="Profile" options={{ title: "Profile", headerStyle: { backgroundColor: "#F35960" }, headerTitleStyle: { color: "white" }, headerTitleAlign: "center" }}>
+                            {() => <ProfileScreen user={user} setUser={setUser} />}
+                          </Stack.Screen>
+                        </Stack.Navigator>
+                      )}
+                    </Tab.Screen>
+                  </Tab.Navigator>
                 )}
-              </Tab.Screen>
-
-              <Tab.Screen name="Around Me" options={{ tabBarLabel: "Around Me", tabBarIcon: ({ color, size }) => (<SimpleLineIcons name="location-pin" size={size} color={color} />)}}>
-                {() => (
-                  <Stack.Navigator>
-                    <Stack.Screen name="Around Me" options={{ title: "Around Me", headerStyle: { backgroundColor: "#F35960" }, headerTitleStyle: { color: "white" }, headerTitleAlign: "center" }}>
-                    {() => <AroundMeScreen />}
-                    </Stack.Screen>
-                  </Stack.Navigator>
-                )}
-              </Tab.Screen>
-
-              <Tab.Screen name="Profile" options={{ tabBarLabel: "Profile", tabBarIcon: ({ color, size }) => (<AntDesign name="user" size={size} color={color} />)}}>
-                {() => (
-                  <Stack.Navigator>
-                    <Stack.Screen name="Profile" options={{ title: "Profile", headerStyle: { backgroundColor: "#F35960" }, headerTitleStyle: { color: "white" }, headerTitleAlign: "center" }}>
-                      {() => <ProfileScreen user={user} setUser={setUser} />}
-                    </Stack.Screen>
-                  </Stack.Navigator>
-                )}
-              </Tab.Screen>
-
-            </Tab.Navigator>
-          )}
-
-        </Stack.Screen>
-      </Stack.Navigator>
-
-    )}
+              </Stack.Screen>
+            </Stack.Navigator>
+          )
+      }
     </NavigationContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -126,5 +116,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
-

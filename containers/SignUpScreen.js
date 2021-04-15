@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation } from "@react-navigation/core";
-import { Text, TextInput, View, ScrollView, SafeAreaView, Alert, StyleSheet } from "react-native";
+import { Text, TextInput, View, ScrollView, SafeAreaView, Alert, StyleSheet, Platform } from "react-native";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from "axios";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -36,37 +36,37 @@ const SignUpScreen = ({ setTokenId }) => {
         else if (error.response.data.error === "Email: incorrect format") Alert.alert("Mauvais format pour l'email");
       } 
     }
-  }
+  };
 
   return (
     <ScrollView style={styles.scroll}>
-    <KeyboardAwareScrollView extraScrollHeight={110} contentContainerStyle={styles.container}>
-    <SafeAreaView style={styles.subcontainer}>
-      <Text style={styles.join}>Rejoignez-nous !</Text>
+      <KeyboardAwareScrollView extraScrollHeight={110} contentContainerStyle={styles.container}>
+        <SafeAreaView style={styles.subcontainer}>
+          <Text style={styles.join}>Rejoignez-nous !</Text>
 
-      <View>
-        <TextInput value={email} onChangeText={text => setEmail(text)} placeholder="email" autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
-        <TextInput value={username} onChangeText={text => setUsername(text)} placeholder="pseudo" autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
-        <TextInput value={name} onChangeText={text => setName(text)} placeholder="nom" autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
-        <TextInput multiline={true} value={description} onChangeText={text => setDescription(text)} placeholder="présentez-vous..." autoCapitalize="none" style={styles.textarea} placeholderTextColor="white" />
+          <View>
+            <TextInput value={email} onChangeText={text => setEmail(text)} placeholder="email" autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
+            <TextInput value={username} onChangeText={text => setUsername(text)} placeholder="pseudo" autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
+            <TextInput value={name} onChangeText={text => setName(text)} placeholder="nom" autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
+            <TextInput multiline={true} value={description} onChangeText={text => setDescription(text)} placeholder="présentez-vous..." autoCapitalize="none" style={styles.textarea} placeholderTextColor="white" />
 
-        <TextInput value={password} onChangeText={text => setPassword(text)} placeholder="mot de passe" secureTextEntry={true} autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
-        <TextInput value={password2} onChangeText={text => setPassword2(text)} placeholder="confirmez le mot de passe" secureTextEntry={true} autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
+            <TextInput value={password} onChangeText={text => setPassword(text)} placeholder="mot de passe" secureTextEntry={true} autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
+            <TextInput value={password2} onChangeText={text => setPassword2(text)} placeholder="confirmez le mot de passe" secureTextEntry={true} autoCapitalize="none" style={styles.input} placeholderTextColor="white" />
 
-        <View style={styles.containerBottom}>
-          <TouchableOpacity title="Sign up" onPress={createAccount} style={styles.buttonCreate}>
-            <Text style={styles.create}>S'inscrire</Text>
-          </TouchableOpacity>  
-          <TouchableOpacity onPress={() => { navigation.navigate("SignIn"); }}>
-            <Text style={styles.account}>Déjà un compte ? Se connecter</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      </SafeAreaView>
-    </KeyboardAwareScrollView>
+            <View style={styles.containerBottom}>
+              <TouchableOpacity title="Sign up" onPress={createAccount} style={styles.buttonCreate}>
+                <Text style={styles.create}>S'inscrire</Text>
+              </TouchableOpacity>  
+              <TouchableOpacity onPress={() => { navigation.navigate("SignIn"); }}>
+                <Text style={styles.account}>Déjà un compte ? Se connecter</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </SafeAreaView>
+      </KeyboardAwareScrollView>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   scroll: {

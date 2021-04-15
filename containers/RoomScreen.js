@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { useRoute } from "@react-navigation/core";
 import axios from "axios";
 import RoomCard from "../components/RoomCard";
@@ -25,30 +25,43 @@ const RoomScreen = () => {
     fetchData();
   }, [params.id]);
 
-
   return (
     <ScrollView>
-      {isLoading ? 
-        (<ActivityIndic />)
-      : (
-        <View> 
-          <RoomCard data={data} val={0} />
+      {isLoading ? <ActivityIndic />
+        : (
+          <View> 
+            <RoomCard data={data} val={0} />
 
-          <Text style={styles.title}>{data.title}</Text>
-          <Text style={styles.description}>{data.description}</Text>
+            <Text style={styles.title}>{data.title}</Text>
+            <Text style={styles.description}>{data.description}</Text>
 
-          <View style={styles.mapViewContainer}>
-            <MapView scrollEnabled={false} style={styles.mapView}
-              initialRegion={{ latitude: data.location[1], longitude: data.location[0], latitudeDelta: 0.02, longitudeDelta: 0.02 }}
-            >
-              <MapView.Marker coordinate={{ latitude: data.location[1], longitude: data.location[0] }} title={data.title} description={data.description} />
-            </MapView>
+            <View style={styles.mapViewContainer}>
+              <MapView 
+                scrollEnabled={false} 
+                style={styles.mapView}
+                initialRegion={{ 
+                  latitude: data.location[1], 
+                  longitude: data.location[0], 
+                  latitudeDelta: 0.02, 
+                  longitudeDelta: 0.02 
+                }}
+              >
+                <MapView.Marker 
+                  coordinate={{ 
+                    latitude: data.location[1], 
+                    longitude: data.location[0] 
+                  }} 
+                  title={data.title} 
+                  description={data.description} 
+                />
+              </MapView>
+            </View>
           </View>
-        </View>
-      )}
+        )
+      }
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   title: {
